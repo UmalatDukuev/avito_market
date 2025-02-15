@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/UmalatDukuev/news"
+	"github.com/UmalatDukuev/market/models"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -10,8 +10,8 @@ type Repository struct {
 }
 
 type Authorization interface {
-	CreateUser(news.User) (int, error)
-	GetUser(username, password string) (news.User, error)
+	CreateUser(models.User) (int, error)
+	GetUser(username, password string) (models.User, error)
 }
 
 func NewRepository(db *sqlx.DB) *Repository {

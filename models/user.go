@@ -1,4 +1,4 @@
-package news
+package models
 
 type User struct {
 	Id       int    `json:"-" db:"id"`
