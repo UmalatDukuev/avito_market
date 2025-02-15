@@ -1,7 +1,8 @@
 package repository
 
 import (
-	"github.com/UmalatDukuev/market/models"
+	"market/models"
+
 	"github.com/jmoiron/sqlx"
 )
 

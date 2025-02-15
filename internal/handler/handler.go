@@ -1,7 +1,8 @@
 package handler
 
 import (
-	"github.com/UmalatDukuev/news/internal/service"
+	"market/internal/service"
+
 	"github.com/gin-gonic/gin"
 )
 

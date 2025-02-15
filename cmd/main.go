@@ -1,13 +1,18 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"market/internal/handler"
+	"market/internal/repository"
+	"market/internal/service"
 
 	"github.com/UmalatDukuev/news"
-	"github.com/UmalatDukuev/news/internal/handler"
-	"github.com/UmalatDukuev/news/internal/repository"
-	"github.com/UmalatDukuev/news/internal/service"
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 )
@@ -33,14 +38,34 @@ func main() {
 		log.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
-	defer db.Close()
 	repos := repository.NewRepository(db)
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
-	srv := new(news.Server)
 
-	if err := srv.Run("8000", handlers.InitRoutes()); err != nil {
-		log.Printf("%s", err)
+	srv := new(news.Server)
+	go func() {
+		if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			log.Fatalf("error occurred while running http server: %s", err.Error())
+		}
+	}()
+
+	log.Println("Server Started")
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	log.Println("Shutting Down Server")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := srv.ShutDown(ctx); err != nil {
+		log.Printf("error occurred on server shutting down: %s", err.Error())
+	}
+
+	if err := db.Close(); err != nil {
+		log.Printf("error occurred on db connection close: %s", err.Error())
 	}
 }
 

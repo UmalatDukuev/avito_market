@@ -4,10 +4,10 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"market/internal/repository"
+	"market/models"
 	"time"
 
-	"github.com/UmalatDukuev/news"
-	"github.com/UmalatDukuev/news/internal/repository"
 	"github.com/golang-jwt/jwt"
 )
 
@@ -30,7 +30,7 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 	return &AuthService{repo: repo}
 }
 
-func (s *AuthService) CreateUser(user news.User) (int, error) {
+func (s *AuthService) CreateUser(user models.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }

@@ -1,12 +1,12 @@
 package service
 
 import (
-	"github.com/UmalatDukuev/news"
-	"github.com/UmalatDukuev/news/internal/repository"
+	"market/internal/repository"
+	"market/models"
 )
 
 type Authorization interface {
-	CreateUser(news.User) (int, error)
+	CreateUser(models.User) (int, error)
 	GenerateToken(username, password string) (string, error)
 	ParseToken(accessToken string) (int, error)
 }
