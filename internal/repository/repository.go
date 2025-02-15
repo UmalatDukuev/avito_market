@@ -8,6 +8,7 @@ import (
 
 type Repository struct {
 	Authorization
+	Information
 }
 
 type Authorization interface {
@@ -15,8 +16,17 @@ type Authorization interface {
 	GetUser(username, password string) (models.User, error)
 }
 
+type Information interface {
+	GetInfo(int) (models.Info, error)
+}
+
+type Transaction interface {
+	SendCoin(int) (models.Info, error)
+}
+
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		Information:   NewInfoPostgres(db),
 	}
 }

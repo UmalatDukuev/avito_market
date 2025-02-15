@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"market"
 	"os"
 	"os/signal"
 	"syscall"
@@ -12,7 +13,6 @@ import (
 	"market/internal/repository"
 	"market/internal/service"
 
-	"github.com/UmalatDukuev/news"
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 )
@@ -42,7 +42,7 @@ func main() {
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
-	srv := new(news.Server)
+	srv := new(market.Server)
 	go func() {
 		if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 			log.Fatalf("error occurred while running http server: %s", err.Error())

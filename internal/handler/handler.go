@@ -16,11 +16,19 @@ func NewHandler(services *service.Service) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
-	auth := router.Group("/auth")
+	api := router.Group("/api")
+	// api := router.Group("/api", h.userIdentity)
+	// {
+	// 	api.GET("/info", h.getInfo)
+	// }
+	auth := api.Group("/auth")
 	{
 		auth.POST("sign-up", h.signUp)
 		auth.POST("sign-in", h.signIn)
-
 	}
+
+	api.GET("/info", h.userIdentity, h.getInfo)
+	api.GET("/sendCoin", h.userIdentity, h.sendCoin)
+
 	return router
 }

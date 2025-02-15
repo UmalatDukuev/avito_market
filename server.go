@@ -1,4 +1,4 @@
-package news
+package market
 
 import (
 	"context"

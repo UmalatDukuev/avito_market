@@ -11,12 +11,24 @@ type Authorization interface {
 	ParseToken(accessToken string) (int, error)
 }
 
+type Information interface {
+	GetInfo(int) (models.Info, error)
+}
+
+type Transaction interface {
+	GetInfo(int) (models.Info, error)
+}
+
 type Service struct {
 	Authorization
+	Information
+	Transaction
 }
 
 func NewService(repo *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repo.Authorization),
+		Information:   NewInfoService(repo.Information),
+		Transaction:   NewTransactionService(repo.Transaction),
 	}
 }
