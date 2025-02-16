@@ -5,8 +5,14 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/gin-gonic/gin"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 )
+
+var testDB *sqlx.DB
+var testRouter *gin.Engine
 
 func resetTransactionTestDB() {
 	testDB.Exec("DELETE FROM transactions")
