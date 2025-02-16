@@ -7,3 +7,5 @@ https://github.com/avito-tech/tech-internship/blob/main/Tech%20Internships/Backe
 
 запуск через
 docker-compose up --build
+
+через докер могут быть технические шоколадки поэтому надёжнее через go run cmd/main.go и локальную бдшку....
