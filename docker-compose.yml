@@ -12,7 +12,7 @@ services:
       - DATABASE_NAME=shop
       - DATABASE_HOST=db
       # порт сервиса
-      - SERVER_PORT=8080а
+      - SERVER_PORT=8080
     depends_on:
       db:
         condition: service_healthy
