@@ -29,6 +29,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api.GET("/info", h.userIdentity, h.getInfo)
 	api.POST("/sendCoin", h.userIdentity, h.sendCoin)
+	api.GET("/buy/:item", h.userIdentity, h.buyItem)
 
 	return router
 }

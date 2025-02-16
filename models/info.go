@@ -1,10 +1,20 @@
 package models
 
 type Info struct {
-	Coins       int    `json:"coins"`
-	Inventory   []Item `json:"inventory"`
+	Coins       int `json:"coins"`
+	Inventory   []Item
 	CoinHistory struct {
-		Received []Transaction `json:"received"`
-		Sent     []Transaction `json:"sent"`
-	} `json:"coinHistory"`
+		Received []ReceivedCoinRequest
+		Sent     []SendCoinRequest
+	}
+}
+
+type SendCoinRequest struct {
+	ToUser int `json:"toUser" binding:"required"`
+	Amount int `json:"amount" binding:"required"`
+}
+
+type ReceivedCoinRequest struct {
+	FromUser int `json:"fromUser" binding:"required"`
+	Amount   int `json:"amount" binding:"required"`
 }

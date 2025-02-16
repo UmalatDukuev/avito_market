@@ -31,6 +31,13 @@ func (r *TransactionPostgres) SendCoins(fromUserID, toUserID, amount int) error 
 		return fmt.Errorf("failed to deposit coins to user %d: %w", toUserID, err)
 	}
 
+	_, err = tx.Exec(`
+		INSERT INTO transactions (from_user_id, to_user_id, amount, transaction_time)
+		VALUES ($1, $2, $3, current_timestamp)`, fromUserID, toUserID, amount)
+	if err != nil {
+		return fmt.Errorf("failed to log transaction from %d to %d: %w", fromUserID, toUserID, err)
+	}
+
 	if err := tx.Commit(); err != nil {
 		return fmt.Errorf("failed to commit transaction: %w", err)
 	}

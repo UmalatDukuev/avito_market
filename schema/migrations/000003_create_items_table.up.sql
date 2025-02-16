@@ -3,6 +3,6 @@ CREATE TABLE items (
     name varchar(255) not null,
     description text,
     price int not null,
-    inventory_count int default 0,
+    -- inventory_count int default 0,
     PRIMARY KEY (id)
 );

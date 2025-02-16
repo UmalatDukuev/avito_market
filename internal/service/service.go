@@ -19,10 +19,15 @@ type Transaction interface {
 	SendCoins(fromUserID, toUserID, amount int) error
 }
 
+type Item interface {
+	BuyItem(userID int, itemName string) error
+}
+
 type Service struct {
 	Authorization
 	Information
 	Transaction
+	Item
 }
 
 func NewService(repo *repository.Repository) *Service {
@@ -30,5 +35,6 @@ func NewService(repo *repository.Repository) *Service {
 		Authorization: NewAuthService(repo.Authorization),
 		Information:   NewInfoService(repo.Information),
 		Transaction:   NewTransactionService(repo.Transaction),
+		Item:          NewItemService(repo.Item),
 	}
 }
