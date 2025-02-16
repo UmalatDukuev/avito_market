@@ -16,7 +16,7 @@ type Information interface {
 }
 
 type Transaction interface {
-	GetInfo(int) (models.Info, error)
+	SendCoins(fromUserID, toUserID, amount int) error
 }
 
 type Service struct {

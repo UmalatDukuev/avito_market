@@ -28,7 +28,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	}
 
 	api.GET("/info", h.userIdentity, h.getInfo)
-	api.GET("/sendCoin", h.userIdentity, h.sendCoin)
+	api.POST("/sendCoin", h.userIdentity, h.sendCoin)
 
 	return router
 }

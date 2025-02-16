@@ -1,8 +1,8 @@
 package handler
 
 type SendCoinRequest struct {
-	ToUser string `json:"toUser" binding:"required"`
-	Amount int    `json:"amount" binding:"required"`
+	ToUser int `json:"toUser" binding:"required"`
+	Amount int `json:"amount" binding:"required"`
 }
 
 type signInInput struct {

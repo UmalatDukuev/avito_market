@@ -9,6 +9,7 @@ import (
 type Repository struct {
 	Authorization
 	Information
+	Transaction
 }
 
 type Authorization interface {
@@ -21,12 +22,14 @@ type Information interface {
 }
 
 type Transaction interface {
-	SendCoin(int) (models.Info, error)
+	SendCoins(fromUserID, toUserID, amount int) error
+	GetCoinsByID(userID int) (int, error)
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
 		Information:   NewInfoPostgres(db),
+		Transaction:   NewTransactionPostgres(db),
 	}
 }
